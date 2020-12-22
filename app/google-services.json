@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "787029177405",
+    "firebase_url": "https://abiding-operand-294619.firebaseio.com",
+    "project_id": "abiding-operand-294619",
+    "storage_bucket": "abiding-operand-294619.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787029177405:android:4a069fb66dd4771430a654",
+        "android_client_info": {
+          "package_name": "com.example.emotionrecognizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787029177405-62f666qek5ce1kqu98j1072g9mdovjhh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXXCFHYOmWUE3tvwTxE-V7gaKUMnYbO_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787029177405-62f666qek5ce1kqu98j1072g9mdovjhh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
