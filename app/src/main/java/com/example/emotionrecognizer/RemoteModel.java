@@ -33,7 +33,6 @@ public class RemoteModel {
         RemoteModelManager.getInstance().download(remoteModel, downloadConditions).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
             }
         });
         isDownloadCompleted(remoteModel, downloadConditions);
@@ -44,7 +43,6 @@ public class RemoteModel {
         RemoteModelManager.getInstance().download(remoteModel, downloadConditions).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
             }
         });
     }
@@ -63,7 +61,7 @@ public class RemoteModel {
                         }
 
                         AutoMLImageLabelerOptions options = optionsBuilder
-                                .setConfidenceThreshold(0.25f)
+                                .setConfidenceThreshold(0.05f)
                                 .build();
 
                         ImageLabeler labeler = ImageLabeling.getClient(options);

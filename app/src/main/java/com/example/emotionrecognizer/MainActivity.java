@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         cameraView = findViewById(R.id.camera);
         button = findViewById(R.id.button);
+        RemoteModel.configureHostedModelSource();
         alertDialog = new SpotsDialog.Builder().setContext(this)
                 .setMessage("Processing")
                 .setCancelable(false)
@@ -74,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 bitmap = Bitmap.createScaledBitmap(bitmap, cameraView.getWidth(), cameraView.getHeight(), false);
                 cameraView.stop();
 
-                RemoteModel.configureHostedModelSource();
                 RemoteModel.runEmotionRecognizer(bitmap);
+                alertDialog.dismiss();
             }
 
             @Override

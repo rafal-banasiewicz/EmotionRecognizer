@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "787029177405-38dm0tg9f4fjaarv18pl12jfk3p3q0ne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emotionrecognizer",
+            "certificate_hash": "31750b72fa1f5ee988854cc4e46a1f7f49da564e"
+          }
+        },
+        {
           "client_id": "787029177405-62f666qek5ce1kqu98j1072g9mdovjhh.apps.googleusercontent.com",
           "client_type": 3
         }
