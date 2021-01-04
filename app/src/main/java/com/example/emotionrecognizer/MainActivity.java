@@ -3,8 +3,10 @@ package com.example.emotionrecognizer;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,8 +21,13 @@ import dmax.dialog.SpotsDialog;
 
 public class MainActivity extends AppCompatActivity {
 
+    protected static final long TIME_DELAY = 1000;
+
+    Handler handler = new Handler();
     CameraView cameraView;
     Button button;
+    TextView textView;
+    TextView textView2;
 
     AlertDialog alertDialog;
 
@@ -42,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         cameraView = findViewById(R.id.camera);
         button = findViewById(R.id.button);
+        textView = findViewById(R.id.textView);
+        textView2 = findViewById(R.id.textView2);
         RemoteModel.configureHostedModelSource();
         alertDialog = new SpotsDialog.Builder().setContext(this)
                 .setMessage("Processing")
@@ -77,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                 RemoteModel.runEmotionRecognizer(bitmap);
                 alertDialog.dismiss();
+                handler.post(updateTextRunnable);
             }
 
             @Override
@@ -85,4 +95,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    Runnable updateTextRunnable = new Runnable() {
+        @Override
+        public void run() {
+            textView.setText(RemoteModel.getText());
+            float floatConfidence = RemoteModel.getConfidence();
+            String stringConfidence = Float.toString(floatConfidence);
+            textView2.setText(stringConfidence);
+            handler.postDelayed(this, TIME_DELAY);
+        }
+    };
 }
