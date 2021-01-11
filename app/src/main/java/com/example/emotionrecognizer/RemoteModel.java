@@ -22,8 +22,8 @@ import java.util.List;
 public class RemoteModel {
 
     private static final AutoMLImageLabelerRemoteModel remoteModel = new AutoMLImageLabelerRemoteModel.Builder("EmotionRecognizerModel").build();
-    private static String text;
-    private static float confidence;
+    private static String emotionName;
+    private static float emotionConfidence;
 
     public static void configureHostedModelSource() {
         startModelDownloadTask(remoteModel);
@@ -73,12 +73,12 @@ public class RemoteModel {
                                     @Override
                                     public void onSuccess(List<ImageLabel> imageLabels) {
                                         for (ImageLabel label : imageLabels) {
-                                            text = label.getText();
-                                            confidence = label.getConfidence();
+                                            String text = label.getText();
+                                            float confidence = label.getConfidence();
                                             int index = label.getIndex();
                                         }
-                                        text = imageLabels.get(0).getText();
-                                        confidence = imageLabels.get(0).getConfidence();
+                                        emotionName = imageLabels.get(0).getText();
+                                        emotionConfidence = imageLabels.get(0).getConfidence();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -98,9 +98,9 @@ public class RemoteModel {
     }
 
     public static String getText() {
-        return text;
+        return emotionName;
     }
     public static float getConfidence() {
-        return confidence;
+        return emotionConfidence;
     }
 }
