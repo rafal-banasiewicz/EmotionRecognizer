@@ -22,8 +22,10 @@ import java.util.List;
 public class RemoteModel {
 
     private static final AutoMLImageLabelerRemoteModel remoteModel = new AutoMLImageLabelerRemoteModel.Builder("EmotionRecognizerModel").build();
-    private static String emotionName;
-    private static float emotionConfidence;
+    private static String firstEmotionName;
+    private static float firstEmotionConfidence;
+    private static String secondEmotionName;
+    private static float secondEmotionConfidence;
 
     public static void configureHostedModelSource() {
         startModelDownloadTask(remoteModel);
@@ -54,16 +56,18 @@ public class RemoteModel {
         RemoteModelManager.getInstance().isModelDownloaded(remoteModel)
                 .addOnSuccessListener(new OnSuccessListener<Boolean>() {
                     @Override
-                    public void onSuccess(Boolean aBoolean) {
+                    public void onSuccess(Boolean isDownloaded) {
                         AutoMLImageLabelerOptions.Builder optionsBuilder;
-                        if (aBoolean) {
+                        if (isDownloaded) {
                             optionsBuilder = new AutoMLImageLabelerOptions.Builder(remoteModel);
                         } else {
-                            optionsBuilder = new AutoMLImageLabelerOptions.Builder(remoteModel); //what if not downloaded
+                            optionsBuilder = null;
+                            startModelDownloadTask(remoteModel);
+                            imageLabeler(remoteModel, image);
                         }
 
                         AutoMLImageLabelerOptions options = optionsBuilder
-                                .setConfidenceThreshold(0.05f)
+                                .setConfidenceThreshold(0.001f)
                                 .build();
 
                         ImageLabeler labeler = ImageLabeling.getClient(options);
@@ -77,8 +81,10 @@ public class RemoteModel {
                                             float confidence = label.getConfidence();
                                             int index = label.getIndex();
                                         }
-                                        emotionName = imageLabels.get(0).getText();
-                                        emotionConfidence = imageLabels.get(0).getConfidence();
+                                        firstEmotionName = imageLabels.get(0).getText();
+                                        secondEmotionName = imageLabels.get(1).getText();
+                                        firstEmotionConfidence = imageLabels.get(0).getConfidence();
+                                        secondEmotionConfidence = imageLabels.get(1).getConfidence();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -97,10 +103,16 @@ public class RemoteModel {
         imageLabeler(remoteModel, image);
     }
 
-    public static String getText() {
-        return emotionName;
+    public static String getFirstEmotionText() {
+        return firstEmotionName;
     }
-    public static float getConfidence() {
-        return emotionConfidence;
+    public static String getSecondEmotionText() {
+        return secondEmotionName;
+    }
+    public static float getFirstConfidence() {
+        return firstEmotionConfidence;
+    }
+    public static float getSecondConfidence() {
+        return secondEmotionConfidence;
     }
 }
